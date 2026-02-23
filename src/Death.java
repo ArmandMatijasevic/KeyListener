@@ -29,8 +29,8 @@ public class Death {
         ypos = pYpos;
         dx = 0;
         dy = 0;
-        width = 400;
-        height = 500;
+        width = 100;
+        height = 100;
         isAlive = true;
         successRate=psuccess;
         health = 1000000;
