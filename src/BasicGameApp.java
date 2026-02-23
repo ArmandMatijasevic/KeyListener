@@ -68,7 +68,7 @@ public class BasicGameApp implements Runnable, KeyListener {
         astroImage = Toolkit.getDefaultToolkit().getImage("this.jpg");
         meteor = new Meteor("meteor", 500, 300, 0);
         meteorImage = Toolkit.getDefaultToolkit().getImage("smth.jpg");
-        border = new Death("border of doom",500,400,1.00);
+        border = new Death("border of doom",0,600,1.00);
         borderImage = Toolkit.getDefaultToolkit().getImage("img.png");
         run();
     } // end BasicGameApp constructor
@@ -181,6 +181,7 @@ public class BasicGameApp implements Runnable, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
 
+
     }
 
     @Override
@@ -202,7 +203,14 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.dy = 0;
             astro.dx = 10;
         }
-
+        if (e.getKeyCode()==69) {
+            astro.dy = 0;
+            astro.dx = 50;
+        }
+        if (e.getKeyCode()==81) {
+            astro.dy = 0;
+            astro.dx = -50;
+        }
     }
 
 
@@ -225,9 +233,14 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.dx = 0;
         }
         if (e.getKeyCode()==69) {
-            astro.dy = astro.dy+40;
+            astro.dy = 0;
             astro.dx = 0;
         }
+        if (e.getKeyCode()==81) {
+            astro.dy = 0;
+            astro.dx = 0;
+        }
+
 
 
     }
