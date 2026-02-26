@@ -46,8 +46,8 @@ public class Astronaut {
     }
 
     public void moove() { // move
-        xpos = xpos + dx/2;
-        ypos = ypos + dy*2;
+        xpos = xpos + dx;
+        ypos = ypos + dy;
         rect=new Rectangle(xpos+width/2, ypos + height/2, width,height);
     }
 

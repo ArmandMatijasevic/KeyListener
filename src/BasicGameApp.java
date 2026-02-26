@@ -68,7 +68,7 @@ public class BasicGameApp implements Runnable, KeyListener {
         astroImage = Toolkit.getDefaultToolkit().getImage("this.jpg");
         meteor = new Meteor("meteor", 500, 300, 0);
         meteorImage = Toolkit.getDefaultToolkit().getImage("smth.jpg");
-        border = new Death("border of doom",0,600,1.00);
+        border = new Death("border of doom",0,690,1.00);
         borderImage = Toolkit.getDefaultToolkit().getImage("img.png");
         run();
     } // end BasicGameApp constructor
@@ -98,23 +98,25 @@ public class BasicGameApp implements Runnable, KeyListener {
         meteor.bounce();
         border.move();
         if(astro.rect.intersects(Boi.rect)){
-            Boi.dx = -Boi.dx;
             Boi.dy = -Boi.dy;
+
 
             double rand1 = Math.random();
             double rand2 = Math.random();
-           // if (rand1 + Boi.successRate > rand2 + astro.successRate) {
-           //     astro.width= astro.width +10;//makes astro wider 75% of the time
-           // } else {
-           //     Boi.height= Boi.height +10; //makes Boi taller 25% of the time
-           // }
+            if (rand1 + Boi.successRate > rand2 + astro.successRate) {
+                Boi.dy -= 4;
+            } else {
+                Boi.dy += 10;
+            }
             astro.isAlive = false;
         }
-        if (Boi.dx>=100){
-            Boi.dx=Boi.dx/20;
+        if(Boi.dy>50){
+            Boi.dy=50;
         }
+
         if(Boi.rect.intersects(border.rect)){
             astro.health = astro.health - 1;
+
         }
 
 
@@ -188,11 +190,11 @@ public class BasicGameApp implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());
         if (e.getKeyCode()==87){
-            astro.dy = -10;
+            astro.dy = 0;
             astro.dx = 0;
         }
         if (e.getKeyCode()==83) {
-            astro.dy = 10;
+            astro.dy = 0;
             astro.dx = 0;
         }
         if (e.getKeyCode()==65) {
