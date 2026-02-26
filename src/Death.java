@@ -34,6 +34,7 @@ public class Death {
         isAlive = true;
         successRate=psuccess;
         health = 1000000;
+
  
     }
 
