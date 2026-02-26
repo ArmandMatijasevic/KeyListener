@@ -29,18 +29,17 @@ public class Death {
         ypos = pYpos;
         dx = 0;
         dy = 0;
-        width = 1000;
-        height = 100;
+        width = 400;
+        height = 500;
         isAlive = true;
         successRate=psuccess;
         health = 1000000;
-        rect=new Rectangle(0, 600, width,height);
  
     }
 
     public void move() { // move
 
-        rect=new Rectangle(0, 600, width,height);
+        rect=new Rectangle(500, 400, width,height);
         xpos = 0;
         ypos = 0;
     }
