@@ -37,11 +37,11 @@ public class BasicGameApp implements Runnable, KeyListener {
 
     Astronaut astro;
     Image astroImage;
-    Astronaut Boi;
-    Image BoiImage;
+    Astronaut Ball;
+    Image BallImage;
     Meteor meteor;
     Image meteorImage;
-    Image space;
+    Image background;
     Astronaut alien;
     Image alienImage;
     Death border;
@@ -62,14 +62,15 @@ public class BasicGameApp implements Runnable, KeyListener {
     public BasicGameApp() { // BasicGameApp constructor
 
         setUpGraphics();
-        Boi = new Astronaut("img.png", 0, 0, 0.75);
-        BoiImage = Toolkit.getDefaultToolkit().getImage("img.png");
+        Ball = new Astronaut("img.png", 0, 0, 0.75);
+        BallImage = Toolkit.getDefaultToolkit().getImage("img.png");
         astro = new Astronaut("this.jpg", 300, 300, 0.25);
         astroImage = Toolkit.getDefaultToolkit().getImage("this.jpg");
         meteor = new Meteor("meteor", 500, 300, 0);
         meteorImage = Toolkit.getDefaultToolkit().getImage("smth.jpg");
         border = new Death("border of doom",0,690,1.00);
         borderImage = Toolkit.getDefaultToolkit().getImage("img.png");
+        background = Toolkit.getDefaultToolkit().getImage("img.png");
         run();
     } // end BasicGameApp constructor
 //*******************************************************************************
@@ -92,30 +93,35 @@ public class BasicGameApp implements Runnable, KeyListener {
     public void moveThings() {
         astro.move();
         astro.wrap();
-        Boi.moove();
-        Boi.bounce();
+        Ball.moove();
+        Ball.bounce();
         meteor.move();
         meteor.bounce();
         border.move();
-        if(astro.rect.intersects(Boi.rect)){
-            Boi.dy = -Boi.dy;
+        if(astro.rect.intersects(Ball.rect)){
+            Ball.dy = -Ball.dy;
+            background = Toolkit.getDefaultToolkit().getImage("smth.png");
+
+
+
 
 
             double rand1 = Math.random();
             double rand2 = Math.random();
-            if (rand1 + Boi.successRate > rand2 + astro.successRate) {
-                Boi.dy -= 4;
+            if (rand1 + Ball.successRate > rand2 + astro.successRate) {
+                Ball.dy -= 4;
             } else {
-                Boi.dy += 10;
+                Ball.dy += 10;
             }
             astro.isAlive = false;
         }
-        if(Boi.dy>50){
-            Boi.dy=50;
+        if(Ball.dy>50){
+            Ball.dy=50;
         }
 
-        if(Boi.rect.intersects(border.rect)){
+        if(Ball.rect.intersects(border.rect)){
             astro.health = astro.health - 1;
+            background = Toolkit.getDefaultToolkit().getImage("img.png");
 
         }
 
@@ -128,14 +134,15 @@ public class BasicGameApp implements Runnable, KeyListener {
     private void render() {
         Graphics2D g = (Graphics2D) bufferStrategy.getDrawGraphics();
         g.clearRect(0, 0, WIDTH, HEIGHT);
-
+        g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
         g.setColor(new Color(182, 30 ,44 ));
         g.fillRect(0,0,astro.health*10, 20);
         g.drawImage(astroImage, astro.xpos, astro.ypos, astro.width, astro.height, null);
         g.drawImage(meteorImage, meteor.xpos, meteor.ypos, meteor.width, meteor.height, null);
-        g.drawImage(BoiImage, Boi.xpos, Boi.ypos, Boi.width, Boi.height, null);
+        g.drawImage(BallImage, Ball.xpos, Ball.ypos, Ball.width, Ball.height, null);
         g.drawImage(borderImage, border.xpos, border.ypos, border.width, border.height, null);
         g.dispose();
+        g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
         bufferStrategy.show();
     }
 
@@ -213,6 +220,22 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.dy = 0;
             astro.dx = -50;
         }
+        if (e.getKeyCode()==38) {
+            Ball.dy = -10;
+
+        }
+        if (e.getKeyCode()==39) {
+
+            Ball.dx = 10;
+        }
+        if (e.getKeyCode()==40) {
+            Ball.dy = 10;
+
+        }
+        if (e.getKeyCode()==37) {
+
+            Ball.dx = -10;
+        }
     }
 
 
@@ -242,6 +265,23 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.dy = 0;
             astro.dx = 0;
         }
+        if (e.getKeyCode()==38) {
+            Ball.dx = 0;
+            Ball.dy = 0;
+        }
+        if (e.getKeyCode()==39) {
+            Ball.dx = 0;
+            Ball.dy = 0;
+        }
+        if (e.getKeyCode()==40) {
+            Ball.dx = 0;
+            Ball.dy = 0;
+        }
+        if (e.getKeyCode()==37) {
+            Ball.dx = 0;
+            Ball.dy = 0;
+        }
+
 
 
 
