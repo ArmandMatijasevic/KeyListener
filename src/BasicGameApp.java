@@ -35,6 +35,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 
     public BufferStrategy bufferStrategy;
 
+
     Astronaut astro;
     Image astroImage;
     Astronaut Ball;
