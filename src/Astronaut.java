@@ -28,8 +28,8 @@ public class Astronaut {
         name = pName;
         xpos = pXpos;
         ypos = pYpos;
-        dx = 0;
-        dy = 0;
+        dx = 5;
+        dy = 20;
         width = 60;
         height = 60;
         isAlive = true;

@@ -70,8 +70,8 @@ public class BasicGameApp implements Runnable, KeyListener {
         meteor = new Meteor("meteor", 500, 300, 0);
         meteorImage = Toolkit.getDefaultToolkit().getImage("smth.jpg");
         border = new Death("border of doom",0,690,1.00);
-        borderImage = Toolkit.getDefaultToolkit().getImage("img.png");
-        background = Toolkit.getDefaultToolkit().getImage("img.png");
+        borderImage = Toolkit.getDefaultToolkit().getImage("this.jpg");
+        background = Toolkit.getDefaultToolkit().getImage("smth.png");
         run();
     } // end BasicGameApp constructor
 //*******************************************************************************
@@ -121,8 +121,41 @@ public class BasicGameApp implements Runnable, KeyListener {
         }
 
         if(Ball.rect.intersects(border.rect)){
-            astro.health = astro.health - 1;
+            astro.health = astro.health - 34;
             background = Toolkit.getDefaultToolkit().getImage("img.png");
+
+        }
+        if(astro.health < 0 ){
+            astro.dx +=1000;
+            Ball.dx +=1000;
+            border.height = 700;
+            border.ypos = 0;
+            border.xpos = 0;
+        }
+        if(Ball.ypos > 600){
+            Ball.ypos = 300;
+            Ball.xpos = 500;
+            Ball.dy = -10;
+            Ball.dx = -5;
+        }
+        if(astro.ypos > 750){
+            astro.ypos = 300;
+            astro.xpos = 500;
+
+        }
+        if(astro.ypos < -50){
+            astro.ypos = 300;
+            astro.xpos = 500;
+
+        }
+        if(astro.xpos < -50){
+            astro.ypos = 300;
+            astro.xpos = 500;
+
+        }
+        if(astro.xpos > 1050){
+            astro.ypos = 300;
+            astro.xpos = 500;
 
         }
 
@@ -221,22 +254,23 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.dy = 0;
             astro.dx = -50;
         }
-        if (e.getKeyCode()==38) {
-            Ball.dy = -10;
 
-        }
-        if (e.getKeyCode()==39) {
+       // if (e.getKeyCode()==38) {
+       //     Ball.dy = -10;
 
-            Ball.dx = 10;
-        }
-        if (e.getKeyCode()==40) {
-            Ball.dy = 10;
+     //   }
+      //  if (e.getKeyCode()==39) {
 
-        }
-        if (e.getKeyCode()==37) {
+       //     Ball.dx = 10;
+      //  }
+       // if (e.getKeyCode()==40) {
+       //     Ball.dy = 10;
 
-            Ball.dx = -10;
-        }
+       // }
+       // if (e.getKeyCode()==37) {
+
+       //     Ball.dx = -10;
+       // }
     }
 
 
@@ -266,22 +300,35 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.dy = 0;
             astro.dx = 0;
         }
-        if (e.getKeyCode()==38) {
-            Ball.dx = 0;
-            Ball.dy = 0;
+        if (e.getKeyCode()==82) {
+            if(astro.health<1){
+                astro.dx -=1000;
+                Ball.dx -=1000;
+                border.height = 10;
+                border.ypos = 690;
+                border.xpos = 0;
+                astro.health=100;
+                astro.dx = 5;
+                astro.dy = 20;
+                background = Toolkit.getDefaultToolkit().getImage("smth.png");
+            }
         }
-        if (e.getKeyCode()==39) {
-            Ball.dx = 0;
-            Ball.dy = 0;
-        }
-        if (e.getKeyCode()==40) {
-            Ball.dx = 0;
-            Ball.dy = 0;
-        }
-        if (e.getKeyCode()==37) {
-            Ball.dx = 0;
-            Ball.dy = 0;
-        }
+      //  if (e.getKeyCode()==38) {
+    //        Ball.dx = 0;
+    //        Ball.dy = 0;
+       // }
+       // if (e.getKeyCode()==39) {
+          //  Ball.dx = 0;
+      //      Ball.dy = 0;
+      //  }
+       // if (e.getKeyCode()==40) {
+       //     Ball.dx = 0;
+        //    Ball.dy = 0;
+       // }
+       // if (e.getKeyCode()==37) {
+      //      Ball.dx = 0;
+       //     Ball.dy = 0;
+       // }
 
 
 
