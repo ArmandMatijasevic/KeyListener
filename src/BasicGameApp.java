@@ -32,9 +32,7 @@ public class BasicGameApp implements Runnable, KeyListener {
     public JFrame frame;
     public Canvas canvas;
     public JPanel panel;
-
     public BufferStrategy bufferStrategy;
-
 
     Astronaut astro;
     Image astroImage;
@@ -47,8 +45,8 @@ public class BasicGameApp implements Runnable, KeyListener {
     Image alienImage;
     Death border;
     Image borderImage;
-
-
+    int size = 10;
+    Block [] blocky;
 
     // Main method definition
     // This is the code that runs first and automatically
@@ -56,8 +54,6 @@ public class BasicGameApp implements Runnable, KeyListener {
         BasicGameApp ex = new BasicGameApp();   //creates a new instance of the game
         new Thread(ex).start();                 //creates a threads & starts up the code in the run( ) method
     }
-
-
     // This section is the setup portion of the program
     // Initialize your variables and construct your program objects here.
     public BasicGameApp() { // BasicGameApp constructor
@@ -89,6 +85,7 @@ public class BasicGameApp implements Runnable, KeyListener {
             //}
             render();  // paint the graphics
             pause(30); // sleep for 10 ms
+
         }
     }
     public void moveThings() {
@@ -102,11 +99,6 @@ public class BasicGameApp implements Runnable, KeyListener {
         if(astro.rect.intersects(Ball.rect)){
             Ball.dy = -Ball.dy;
             background = Toolkit.getDefaultToolkit().getImage("smth.png");
-
-
-
-
-
             double rand1 = Math.random();
             double rand2 = Math.random();
             if (rand1 + Ball.successRate > rand2 + astro.successRate) {
@@ -158,10 +150,6 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.xpos = 500;
 
         }
-
-
-
-
     }
 
     //Paints things on the screen using bufferStrategy
@@ -171,6 +159,8 @@ public class BasicGameApp implements Runnable, KeyListener {
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
         g.setColor(new Color(182, 30 ,44 ));
         g.fillRect(0,0,astro.health*10, 20);
+        g.setColor(new Color(40, 160 ,244 ));
+        g.fillRect(0,20,astro.stamina*10, 20);
         g.drawImage(astroImage, astro.xpos, astro.ypos, astro.width, astro.height, null);
         g.drawImage(meteorImage, meteor.xpos, meteor.ypos, meteor.width, meteor.height, null);
         g.drawImage(BallImage, Ball.xpos, Ball.ypos, Ball.width, Ball.height, null);
@@ -178,6 +168,10 @@ public class BasicGameApp implements Runnable, KeyListener {
         g.dispose();
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
         bufferStrategy.show();
+        blocky = new Block[size];
+        for (int x=0; x<size; x=x+1){
+            blocky[x] = new Block("meteor"+x,30+(x*10),400);
+        }
     }
 
     //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -191,42 +185,44 @@ public class BasicGameApp implements Runnable, KeyListener {
     //Graphics setup method
     private void setUpGraphics() {
         frame = new JFrame("Application Template");   //Create the program window or frame.  Names it.
-
         panel = (JPanel) frame.getContentPane();  //sets up a JPanel which is what goes in the frame
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));  //sizes the JPanel
         panel.setLayout(null);   //set the layout
-
         // creates a canvas which is a blank rectangular area of the screen onto which the application can draw
         // and trap input events (Mouse and Keyboard events)
         canvas = new Canvas();
         canvas.setBounds(0, 0, WIDTH, HEIGHT);
         canvas.setIgnoreRepaint(true);
-
         panel.add(canvas);  // adds the canvas to the panel.
-
         // frame operations
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);  //makes the frame close and exit nicely
         frame.pack();  //adjusts the frame and its contents so the sizes are at their default or larger
-
         frame.setResizable(false);   //makes it so the frame cannot be resized
         frame.setVisible(true);      //IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!
-
         // sets up things so the screen displays images nicely.
         canvas.createBufferStrategy(2);
         bufferStrategy = canvas.getBufferStrategy();
         canvas.requestFocus();
-
         canvas.addKeyListener(this);
-
         System.out.println("DONE graphic setup");
     }
-
     @Override
     public void keyTyped(KeyEvent e) {
-
-
+        if (e.getKeyCode()==81) {
+            if(astro.stamina>0) {
+                astro.dy = 0;
+                astro.dx = -50;
+                astro.stamina = astro.stamina -5;
+            }
+        }
+        if (e.getKeyCode()==69) {
+            if(astro.stamina>0) {
+                astro.dy = 0;
+                astro.dx = 50;
+                astro.stamina = astro.stamina -5;
+            }
+        }
     }
-
     @Override
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());
@@ -247,14 +243,19 @@ public class BasicGameApp implements Runnable, KeyListener {
             astro.dx = 10;
         }
         if (e.getKeyCode()==69) {
-            astro.dy = 0;
-            astro.dx = 50;
+            if(astro.stamina>0) {
+                astro.dy = 0;
+                astro.dx = 50;
+                astro.stamina = astro.stamina -2;
+            }
         }
         if (e.getKeyCode()==81) {
-            astro.dy = 0;
-            astro.dx = -50;
+            if(astro.stamina>0) {
+                astro.dy = 0;
+                astro.dx = -50;
+                astro.stamina = astro.stamina -2;
+            }
         }
-
        // if (e.getKeyCode()==38) {
        //     Ball.dy = -10;
 
@@ -272,8 +273,6 @@ public class BasicGameApp implements Runnable, KeyListener {
        //     Ball.dx = -10;
        // }
     }
-
-
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode()==87){
@@ -311,6 +310,7 @@ public class BasicGameApp implements Runnable, KeyListener {
                 astro.dx = 5;
                 astro.dy = 20;
                 background = Toolkit.getDefaultToolkit().getImage("smth.png");
+                astro.stamina = 100;
             }
         }
       //  if (e.getKeyCode()==38) {
@@ -329,9 +329,5 @@ public class BasicGameApp implements Runnable, KeyListener {
       //      Ball.dx = 0;
        //     Ball.dy = 0;
        // }
-
-
-
-
     }
 }

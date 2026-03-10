@@ -4,7 +4,7 @@ import java.awt.*;
  * Created by chales on 11/6/2017.
  * Edits by mblair on 10/27/2025
  */
-public class Astronaut {
+public class Block {
 
     //VARIABLE DECLARATION SECTION
     //Here's where you state which variables you are going to use.
@@ -17,39 +17,33 @@ public class Astronaut {
     public int height;                //the height of the hero image
     public boolean isAlive;           //a boolean to denote if the hero is alive or dead
     public Rectangle rect;
-    public double successRate;
     public int health;
-    public boolean pressingKey;
-    public int stamina;
 
 
     //This is a constructor that takes 3 parameters.
     // This allows us to specify the hero's name and position when we build it.
-    public Astronaut(String pName, int pXpos, int pYpos, double psuccess) {
+    public Block(String pName, int pXpos, int pYpos) {
         name = pName;
         xpos = pXpos;
         ypos = pYpos;
-        dx = 5;
-        dy = 20;
-        width = 60;
-        height = 60;
+        dx = 0;
+        dy = 0;
+        width = 90;
+        height = 30;
         isAlive = true;
-        successRate=psuccess;
-        health = 100;
-        stamina = 100;
+        health = 1;
  
     }
 
     public void move() { // move
         xpos = xpos + dx;
         ypos = ypos + dy;
-
         rect=new Rectangle(xpos+width/2, ypos + height/2, width,height);
     }
 
     public void moove() { // move
-        xpos = xpos + dx;
-        ypos = ypos + dy;
+        xpos = xpos + dx/2;
+        ypos = ypos + dy*2;
         rect=new Rectangle(xpos+width/2, ypos + height/2, width,height);
     }
 
