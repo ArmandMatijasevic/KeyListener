@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Meteor.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #5f826b; font-style: italic;}
+.s4 { color: #7a7e85;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Meteor.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+
+<span class="s3">/**</span>
+ <span class="s3">* Created by chales on 11/6/2017.</span>
+ <span class="s3">* Edits by mblair on 10/27/2025</span>
+ <span class="s3">*/</span>
+<span class="s0">public class </span><span class="s1">Meteor </span><span class="s2">{</span>
+
+    <span class="s4">//VARIABLE DECLARATION SECTION</span>
+    <span class="s4">//Here's where you state which variables you are going to use.</span>
+    <span class="s0">public </span><span class="s1">String name</span><span class="s2">;               </span><span class="s4">//name of the hero</span>
+    <span class="s0">public int </span><span class="s1">xpos</span><span class="s2">;                  </span><span class="s4">//the x position</span>
+    <span class="s0">public int </span><span class="s1">ypos</span><span class="s2">;                  </span><span class="s4">//the y position</span>
+    <span class="s0">public int </span><span class="s1">dx</span><span class="s2">;                    </span><span class="s4">//the speed of the hero in the x direction</span>
+    <span class="s0">public int </span><span class="s1">dy</span><span class="s2">;                    </span><span class="s4">//the speed of the hero in the y direction</span>
+    <span class="s0">public int </span><span class="s1">width</span><span class="s2">;                 </span><span class="s4">//the width of the hero image</span>
+    <span class="s0">public int </span><span class="s1">height</span><span class="s2">;                </span><span class="s4">//the height of the hero image</span>
+    <span class="s0">public boolean </span><span class="s1">isAlive</span><span class="s2">;           </span><span class="s4">//a boolean to denote if the hero is alive or dead</span>
+    <span class="s0">public </span><span class="s1">Rectangle rect</span><span class="s2">;</span>
+    <span class="s0">public double </span><span class="s1">successRate</span><span class="s2">;</span>
+    <span class="s0">public int </span><span class="s1">health</span><span class="s2">;</span>
+
+
+    <span class="s4">//This is a constructor that takes 3 parameters.</span>
+    <span class="s4">// This allows us to specify the hero's name and position when we build it.</span>
+    <span class="s0">public </span><span class="s1">Meteor</span><span class="s2">(</span><span class="s1">String pName</span><span class="s2">, </span><span class="s0">int </span><span class="s1">pXpos</span><span class="s2">, </span><span class="s0">int </span><span class="s1">pYpos</span><span class="s2">, </span><span class="s0">double </span><span class="s1">psuccess</span><span class="s2">) {</span>
+        <span class="s1">name </span><span class="s2">= </span><span class="s1">pName</span><span class="s2">;</span>
+        <span class="s1">xpos </span><span class="s2">= </span><span class="s1">pXpos</span><span class="s2">;</span>
+        <span class="s1">ypos </span><span class="s2">= </span><span class="s1">pYpos</span><span class="s2">;</span>
+        <span class="s1">dx </span><span class="s2">= </span><span class="s5">11</span><span class="s2">;</span>
+        <span class="s1">dy </span><span class="s2">= </span><span class="s5">8</span><span class="s2">;</span>
+        <span class="s1">width </span><span class="s2">= </span><span class="s5">60</span><span class="s2">;</span>
+        <span class="s1">height </span><span class="s2">= </span><span class="s5">60</span><span class="s2">;</span>
+        <span class="s1">isAlive </span><span class="s2">= </span><span class="s0">true</span><span class="s2">;</span>
+        <span class="s1">successRate</span><span class="s2">=</span><span class="s1">psuccess</span><span class="s2">;</span>
+        <span class="s1">health </span><span class="s2">= </span><span class="s5">100</span><span class="s2">;</span>
+ 
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">move</span><span class="s2">() { </span><span class="s4">// move</span>
+        <span class="s1">xpos </span><span class="s2">= </span><span class="s1">xpos </span><span class="s2">+ </span><span class="s1">dx</span><span class="s2">;</span>
+        <span class="s1">ypos </span><span class="s2">= </span><span class="s1">ypos </span><span class="s2">+ </span><span class="s1">dy</span><span class="s2">;</span>
+        <span class="s1">rect</span><span class="s2">=</span><span class="s0">new </span><span class="s1">Rectangle</span><span class="s2">(</span><span class="s1">xpos</span><span class="s2">+</span><span class="s1">width</span><span class="s2">/</span><span class="s5">2</span><span class="s2">, </span><span class="s1">ypos </span><span class="s2">+ </span><span class="s1">height</span><span class="s2">/</span><span class="s5">2</span><span class="s2">, </span><span class="s1">width</span><span class="s2">,</span><span class="s1">height</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">moove</span><span class="s2">() { </span><span class="s4">// move</span>
+        <span class="s1">xpos </span><span class="s2">= </span><span class="s1">xpos </span><span class="s2">+ </span><span class="s1">dx</span><span class="s2">/</span><span class="s5">2</span><span class="s2">;</span>
+        <span class="s1">ypos </span><span class="s2">= </span><span class="s1">ypos </span><span class="s2">+ </span><span class="s1">dy</span><span class="s2">*</span><span class="s5">2</span><span class="s2">;</span>
+        <span class="s1">rect</span><span class="s2">=</span><span class="s0">new </span><span class="s1">Rectangle</span><span class="s2">(</span><span class="s1">xpos</span><span class="s2">+</span><span class="s1">width</span><span class="s2">/</span><span class="s5">2</span><span class="s2">, </span><span class="s1">ypos </span><span class="s2">+ </span><span class="s1">height</span><span class="s2">/</span><span class="s5">2</span><span class="s2">, </span><span class="s1">width</span><span class="s2">,</span><span class="s1">height</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public void </span><span class="s1">bounce</span><span class="s2">() {</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">xpos</span><span class="s2">&gt;=</span><span class="s5">1000</span><span class="s2">-</span><span class="s1">width</span><span class="s2">) {</span>
+            <span class="s1">dx</span><span class="s2">=-</span><span class="s1">dx</span><span class="s2">;}</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">xpos</span><span class="s2">&lt;=</span><span class="s5">0</span><span class="s2">) {</span>
+            <span class="s1">dx</span><span class="s2">=-</span><span class="s1">dx</span><span class="s2">;}</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">ypos</span><span class="s2">&gt;=</span><span class="s5">700</span><span class="s2">-</span><span class="s1">height</span><span class="s2">) {</span>
+            <span class="s1">dy</span><span class="s2">=-</span><span class="s1">dy</span><span class="s2">;}</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">ypos</span><span class="s2">&lt;=</span><span class="s5">0</span><span class="s2">) {</span>
+            <span class="s1">dy</span><span class="s2">=-</span><span class="s1">dy</span><span class="s2">;}</span>
+    <span class="s2">}</span>
+    <span class="s0">public void </span><span class="s1">wrap</span><span class="s2">() {</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">xpos</span><span class="s2">&gt;</span><span class="s5">1000</span><span class="s2">-</span><span class="s1">width</span><span class="s2">) {</span>
+            <span class="s1">xpos</span><span class="s2">=</span><span class="s1">xpos</span><span class="s2">-</span><span class="s5">1000</span><span class="s2">;}</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">xpos</span><span class="s2">&lt;</span><span class="s5">0</span><span class="s2">) {</span>
+            <span class="s1">xpos</span><span class="s2">=</span><span class="s1">xpos</span><span class="s2">+</span><span class="s5">1000</span><span class="s2">;}</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">ypos</span><span class="s2">&gt;</span><span class="s5">700</span><span class="s2">-</span><span class="s1">height</span><span class="s2">) {</span>
+            <span class="s1">ypos</span><span class="s2">=</span><span class="s1">ypos</span><span class="s2">-</span><span class="s5">700</span><span class="s2">;}</span>
+        <span class="s0">if</span><span class="s2">(</span><span class="s1">ypos</span><span class="s2">&lt;</span><span class="s5">0</span><span class="s2">) {</span>
+            <span class="s1">ypos</span><span class="s2">=</span><span class="s1">ypos</span><span class="s2">+</span><span class="s5">700</span><span class="s2">;}</span>
+
+    <span class="s2">}</span>
+<span class="s2">}</span>
+
+
+
+
+
+
+</pre>
+</body>
+</html>

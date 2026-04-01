@@ -106,6 +106,11 @@ public class BasicGameApp implements Runnable, KeyListener {
             } else {
                 Ball.dy += 10;
             }
+            if (rand1 + Ball.successRate > rand2 + astro.successRate) {
+                Ball.dx += 2;
+            } else {
+                Ball.dx -= 5;
+            }
             astro.isAlive = false;
         }
         if(Ball.dy>50){

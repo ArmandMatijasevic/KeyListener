@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>BasicGameAppp.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #2aacb8;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BasicGameAppp.java</font>
+</center></td></tr></table>
+<pre><span class="s0">//Basic Game Application</span>
+<span class="s0">// Basic Object, Image, Movement</span>
+<span class="s0">// Threaded</span>
+
+<span class="s0">//*******************************************************************************</span>
+<span class="s0">//Import Section</span>
+<span class="s0">//Add Java libraries needed for the game</span>
+<span class="s0">//import java.awt.Canvas;</span>
+
+<span class="s0">//Graphics Libraries</span>
+
+<span class="s2">import </span><span class="s1">javax</span><span class="s3">.</span><span class="s1">swing</span><span class="s3">.*;</span>
+<span class="s2">import </span><span class="s1">java</span><span class="s3">.</span><span class="s1">awt</span><span class="s3">.*;</span>
+<span class="s2">import </span><span class="s1">java</span><span class="s3">.</span><span class="s1">awt</span><span class="s3">.</span><span class="s1">image</span><span class="s3">.</span><span class="s1">BufferStrategy</span><span class="s3">;</span>
+
+<span class="s0">//*******************************************************************************</span>
+
+<span class="s2">public class </span><span class="s1">BasicGameAppp </span><span class="s2">implements </span><span class="s1">Runnable </span><span class="s3">{</span>
+
+    <span class="s0">//Variable Definition Section</span>
+    <span class="s0">//Declare the variables used in the program</span>
+    <span class="s0">//You can set their initial values too</span>
+
+    <span class="s0">//Sets the width and height of the program window</span>
+    <span class="s2">final int </span><span class="s1">WIDTH </span><span class="s3">= </span><span class="s4">1000</span><span class="s3">;</span>
+    <span class="s2">final int </span><span class="s1">HEIGHT </span><span class="s3">= </span><span class="s4">700</span><span class="s3">;</span>
+
+    <span class="s0">//Declare the variables needed for the graphics</span>
+    <span class="s2">public </span><span class="s1">JFrame frame</span><span class="s3">;</span>
+    <span class="s2">public </span><span class="s1">Canvas canvas</span><span class="s3">;</span>
+    <span class="s2">public </span><span class="s1">JPanel panel</span><span class="s3">;</span>
+
+    <span class="s2">public </span><span class="s1">BufferStrategy bufferStrategy</span><span class="s3">;</span>
+
+    <span class="s1">Astronaut astro</span><span class="s3">;</span>
+    <span class="s1">Image astroImage</span><span class="s3">;</span>
+
+    <span class="s0">// Main method definition</span>
+    <span class="s0">// This is the code that runs first and automatically</span>
+    <span class="s2">public static void </span><span class="s1">main</span><span class="s3">(</span><span class="s1">String</span><span class="s3">[] </span><span class="s1">args</span><span class="s3">) {</span>
+        <span class="s1">BasicGameAppp ex </span><span class="s3">= </span><span class="s2">new </span><span class="s1">BasicGameAppp</span><span class="s3">();   </span><span class="s0">//creates a new instance of the game</span>
+        <span class="s2">new </span><span class="s1">Thread</span><span class="s3">(</span><span class="s1">ex</span><span class="s3">).</span><span class="s1">start</span><span class="s3">();                 </span><span class="s0">//creates a threads &amp; starts up the code in the run( ) method</span>
+    <span class="s3">}</span>
+
+
+    <span class="s0">// This section is the setup portion of the program</span>
+    <span class="s0">// Initialize your variables and construct your program objects here.</span>
+    <span class="s2">public </span><span class="s1">BasicGameAppp</span><span class="s3">() { </span><span class="s0">// BasicGameApp constructor</span>
+
+        <span class="s1">setUpGraphics</span><span class="s3">();</span>
+        <span class="s1">astro </span><span class="s3">= </span><span class="s2">new </span><span class="s1">Astronaut</span><span class="s3">(</span><span class="s5">&quot;astronaut.png&quot;</span><span class="s3">, </span><span class="s4">300</span><span class="s3">, </span><span class="s4">300</span><span class="s3">, </span><span class="s4">0.25</span><span class="s3">);</span>
+        <span class="s1">astroImage </span><span class="s3">= </span><span class="s1">Toolkit</span><span class="s3">.</span><span class="s1">getDefaultToolkit</span><span class="s3">().</span><span class="s1">getImage</span><span class="s3">(</span><span class="s5">&quot;astronaut.png&quot;</span><span class="s3">);</span>
+        <span class="s1">run</span><span class="s3">();</span>
+    <span class="s3">} </span><span class="s0">// end BasicGameApp constructor</span>
+<span class="s0">//*******************************************************************************</span>
+<span class="s0">//User Method Section</span>
+<span class="s0">// put your code to do things here.</span>
+    <span class="s0">// main thread</span>
+    <span class="s0">// this is the code that plays the game after you set things up</span>
+    <span class="s2">public void </span><span class="s1">run</span><span class="s3">() {</span>
+        <span class="s0">//for the moment we will loop things forever.</span>
+        <span class="s2">while </span><span class="s3">(</span><span class="s2">true</span><span class="s3">) {</span>
+            <span class="s1">moveThings</span><span class="s3">();  </span><span class="s0">//move all the game objects</span>
+            <span class="s1">render</span><span class="s3">();  </span><span class="s0">// paint the graphics</span>
+            <span class="s1">pause</span><span class="s3">(</span><span class="s4">30</span><span class="s3">); </span><span class="s0">// sleep for 10 ms</span>
+        <span class="s3">}</span>
+    <span class="s3">}</span>
+    <span class="s2">public void </span><span class="s1">moveThings</span><span class="s3">() {</span>
+        <span class="s1">astro</span><span class="s3">.</span><span class="s1">move</span><span class="s3">();</span>
+        <span class="s1">astro</span><span class="s3">.</span><span class="s1">wrap</span><span class="s3">();</span>
+    <span class="s3">}</span>
+
+    <span class="s0">//Paints things on the screen using bufferStrategy</span>
+    <span class="s2">private void </span><span class="s1">render</span><span class="s3">() {</span>
+        <span class="s1">Graphics2D g </span><span class="s3">= (</span><span class="s1">Graphics2D</span><span class="s3">) </span><span class="s1">bufferStrategy</span><span class="s3">.</span><span class="s1">getDrawGraphics</span><span class="s3">();</span>
+        <span class="s1">g</span><span class="s3">.</span><span class="s1">clearRect</span><span class="s3">(</span><span class="s4">0</span><span class="s3">, </span><span class="s4">0</span><span class="s3">, </span><span class="s1">WIDTH</span><span class="s3">, </span><span class="s1">HEIGHT</span><span class="s3">);</span>
+        <span class="s0">//draw the image</span>
+        <span class="s1">g</span><span class="s3">.</span><span class="s1">drawImage</span><span class="s3">(</span><span class="s1">astroImage</span><span class="s3">, </span><span class="s1">astro</span><span class="s3">.</span><span class="s1">xpos</span><span class="s3">, </span><span class="s1">astro</span><span class="s3">.</span><span class="s1">ypos</span><span class="s3">, </span><span class="s1">astro</span><span class="s3">.</span><span class="s1">width</span><span class="s3">, </span><span class="s1">astro</span><span class="s3">.</span><span class="s1">height</span><span class="s3">, </span><span class="s2">null</span><span class="s3">);</span>
+
+        <span class="s1">g</span><span class="s3">.</span><span class="s1">dispose</span><span class="s3">();</span>
+        <span class="s1">bufferStrategy</span><span class="s3">.</span><span class="s1">show</span><span class="s3">();</span>
+    <span class="s3">}</span>
+
+    <span class="s0">//Pauses or sleeps the computer for the amount specified in milliseconds</span>
+    <span class="s2">public void </span><span class="s1">pause</span><span class="s3">(</span><span class="s2">int </span><span class="s1">time </span><span class="s3">) {</span>
+        <span class="s2">try </span><span class="s3">{</span>
+            <span class="s1">Thread</span><span class="s3">.</span><span class="s1">sleep</span><span class="s3">(</span><span class="s1">time</span><span class="s3">);</span>
+        <span class="s3">} </span><span class="s2">catch </span><span class="s3">(</span><span class="s1">InterruptedException e</span><span class="s3">) {</span>
+        <span class="s3">}</span>
+    <span class="s3">}</span>
+
+    <span class="s0">//Graphics setup method</span>
+    <span class="s2">private void </span><span class="s1">setUpGraphics</span><span class="s3">() {</span>
+        <span class="s1">frame </span><span class="s3">= </span><span class="s2">new </span><span class="s1">JFrame</span><span class="s3">(</span><span class="s5">&quot;Application Template&quot;</span><span class="s3">);   </span><span class="s0">//Create the program window or frame.  Names it.</span>
+
+        <span class="s1">panel </span><span class="s3">= (</span><span class="s1">JPanel</span><span class="s3">) </span><span class="s1">frame</span><span class="s3">.</span><span class="s1">getContentPane</span><span class="s3">();  </span><span class="s0">//sets up a JPanel which is what goes in the frame</span>
+        <span class="s1">panel</span><span class="s3">.</span><span class="s1">setPreferredSize</span><span class="s3">(</span><span class="s2">new </span><span class="s1">Dimension</span><span class="s3">(</span><span class="s1">WIDTH</span><span class="s3">, </span><span class="s1">HEIGHT</span><span class="s3">));  </span><span class="s0">//sizes the JPanel</span>
+        <span class="s1">panel</span><span class="s3">.</span><span class="s1">setLayout</span><span class="s3">(</span><span class="s2">null</span><span class="s3">);   </span><span class="s0">//set the layout</span>
+
+        <span class="s0">// creates a canvas which is a blank rectangular area of the screen onto which the application can draw</span>
+        <span class="s0">// and trap input events (Mouse and Keyboard events)</span>
+        <span class="s1">canvas </span><span class="s3">= </span><span class="s2">new </span><span class="s1">Canvas</span><span class="s3">();</span>
+        <span class="s1">canvas</span><span class="s3">.</span><span class="s1">setBounds</span><span class="s3">(</span><span class="s4">0</span><span class="s3">, </span><span class="s4">0</span><span class="s3">, </span><span class="s1">WIDTH</span><span class="s3">, </span><span class="s1">HEIGHT</span><span class="s3">);</span>
+        <span class="s1">canvas</span><span class="s3">.</span><span class="s1">setIgnoreRepaint</span><span class="s3">(</span><span class="s2">true</span><span class="s3">);</span>
+
+        <span class="s1">panel</span><span class="s3">.</span><span class="s1">add</span><span class="s3">(</span><span class="s1">canvas</span><span class="s3">);  </span><span class="s0">// adds the canvas to the panel.</span>
+
+        <span class="s0">// frame operations</span>
+        <span class="s1">frame</span><span class="s3">.</span><span class="s1">setDefaultCloseOperation</span><span class="s3">(</span><span class="s1">JFrame</span><span class="s3">.</span><span class="s1">EXIT_ON_CLOSE</span><span class="s3">);  </span><span class="s0">//makes the frame close and exit nicely</span>
+        <span class="s1">frame</span><span class="s3">.</span><span class="s1">pack</span><span class="s3">();  </span><span class="s0">//adjusts the frame and its contents so the sizes are at their default or larger</span>
+        <span class="s1">frame</span><span class="s3">.</span><span class="s1">setResizable</span><span class="s3">(</span><span class="s2">false</span><span class="s3">);   </span><span class="s0">//makes it so the frame cannot be resized</span>
+        <span class="s1">frame</span><span class="s3">.</span><span class="s1">setVisible</span><span class="s3">(</span><span class="s2">true</span><span class="s3">);      </span><span class="s0">//IMPORTANT!!!  if the frame is not set to visible it will not appear on the screen!</span>
+
+        <span class="s0">// sets up things so the screen displays images nicely.</span>
+        <span class="s1">canvas</span><span class="s3">.</span><span class="s1">createBufferStrategy</span><span class="s3">(</span><span class="s4">2</span><span class="s3">);</span>
+        <span class="s1">bufferStrategy </span><span class="s3">= </span><span class="s1">canvas</span><span class="s3">.</span><span class="s1">getBufferStrategy</span><span class="s3">();</span>
+        <span class="s1">canvas</span><span class="s3">.</span><span class="s1">requestFocus</span><span class="s3">();</span>
+        <span class="s1">System</span><span class="s3">.</span><span class="s1">out</span><span class="s3">.</span><span class="s1">println</span><span class="s3">(</span><span class="s5">&quot;DONE graphic setup&quot;</span><span class="s3">);</span>
+    <span class="s3">}</span>
+
+<span class="s3">}</span>
+</pre>
+</body>
+</html>
