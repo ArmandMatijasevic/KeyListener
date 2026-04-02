@@ -34,8 +34,8 @@ public class BasicGameApp implements Runnable, KeyListener {
     public JPanel panel;
     public BufferStrategy bufferStrategy;
 
-    Astronaut astro;
-    Image astroImage;
+    Astronaut paddle;
+    Image paddleImage;
     Astronaut Ball;
     Image BallImage;
     Meteor meteor;
@@ -59,10 +59,10 @@ public class BasicGameApp implements Runnable, KeyListener {
     public BasicGameApp() { // BasicGameApp constructor
 
         setUpGraphics();
-        Ball = new Astronaut("img.png", 0, 0, 0.75);
-        BallImage = Toolkit.getDefaultToolkit().getImage("img.png");
-        astro = new Astronaut("this.jpg", 300, 300, 0.25);
-        astroImage = Toolkit.getDefaultToolkit().getImage("this.jpg");
+        Ball = new Astronaut("White Ball.png", 0, 0, 0.75);
+        BallImage = Toolkit.getDefaultToolkit().getImage("White Ball.png");
+        paddle = new Astronaut("Paddle.png", 300, 300, 0.25);
+        paddleImage = Toolkit.getDefaultToolkit().getImage("Paddle.png");
         meteor = new Meteor("meteor", 500, 300, 0);
         meteorImage = Toolkit.getDefaultToolkit().getImage("smth.jpg");
         border = new Death("border of doom",0,690,1.00);
@@ -79,9 +79,9 @@ public class BasicGameApp implements Runnable, KeyListener {
         //for the moment we will loop things forever.
         while (true) {
             moveThings();  //move all the game objects
-            //if (astro.isAlive == false){
-            //    astro.width = astro.width +1;
-            //    astro.height = astro.height +1;
+            //if (paddle.isAlive == false){
+            //    paddle.width = paddle.width +1;
+            //    paddle.height = paddle.height +1;
             //}
             render();  // paint the graphics
             pause(30); // sleep for 10 ms
@@ -89,41 +89,41 @@ public class BasicGameApp implements Runnable, KeyListener {
         }
     }
     public void moveThings() {
-        astro.move();
-        astro.wrap();
+        paddle.move();
+        paddle.wrap();
         Ball.moove();
         Ball.bounce();
         meteor.move();
         meteor.bounce();
         border.move();
-        if(astro.rect.intersects(Ball.rect)){
+        if(paddle.rect.intersects(Ball.rect)){
             Ball.dy = -Ball.dy;
             background = Toolkit.getDefaultToolkit().getImage("smth.png");
             double rand1 = Math.random();
             double rand2 = Math.random();
-            if (rand1 + Ball.successRate > rand2 + astro.successRate) {
+            if (rand1 + Ball.successRate > rand2 + paddle.successRate) {
                 Ball.dy -= 4;
             } else {
                 Ball.dy += 10;
             }
-            if (rand1 + Ball.successRate > rand2 + astro.successRate) {
+            if (rand1 + Ball.successRate > rand2 + paddle.successRate) {
                 Ball.dx += 2;
             } else {
                 Ball.dx -= 5;
             }
-            astro.isAlive = false;
+            paddle.isAlive = false;
         }
         if(Ball.dy>50){
             Ball.dy=50;
         }
 
         if(Ball.rect.intersects(border.rect)){
-            astro.health = astro.health - 34;
+            paddle.health = paddle.health - 34;
             background = Toolkit.getDefaultToolkit().getImage("img.png");
 
         }
-        if(astro.health < 0 ){
-            astro.dx +=1000;
+        if(paddle.health < 0 ){
+            paddle.dx +=1000;
             Ball.dx +=1000;
             border.height = 700;
             border.ypos = 0;
@@ -135,24 +135,24 @@ public class BasicGameApp implements Runnable, KeyListener {
             Ball.dy = -10;
             Ball.dx = -5;
         }
-        if(astro.ypos > 750){
-            astro.ypos = 300;
-            astro.xpos = 500;
+        if(paddle.ypos > 750){
+            paddle.ypos = 300;
+            paddle.xpos = 500;
 
         }
-        if(astro.ypos < -50){
-            astro.ypos = 300;
-            astro.xpos = 500;
+        if(paddle.ypos < -50){
+            paddle.ypos = 300;
+            paddle.xpos = 500;
 
         }
-        if(astro.xpos < -50){
-            astro.ypos = 300;
-            astro.xpos = 500;
+        if(paddle.xpos < -50){
+            paddle.ypos = 300;
+            paddle.xpos = 500;
 
         }
-        if(astro.xpos > 1050){
-            astro.ypos = 300;
-            astro.xpos = 500;
+        if(paddle.xpos > 1050){
+            paddle.ypos = 300;
+            paddle.xpos = 500;
 
         }
     }
@@ -163,10 +163,10 @@ public class BasicGameApp implements Runnable, KeyListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
         g.setColor(new Color(182, 30 ,44 ));
-        g.fillRect(0,0,astro.health*10, 20);
+        g.fillRect(0,0,paddle.health*10, 20);
         g.setColor(new Color(40, 160 ,244 ));
-        g.fillRect(0,20,astro.stamina*10, 20);
-        g.drawImage(astroImage, astro.xpos, astro.ypos, astro.width, astro.height, null);
+        g.fillRect(0,20,paddle.stamina*10, 20);
+        g.drawImage(paddleImage, paddle.xpos, paddle.ypos, paddle.width+60, paddle.height, null);
         g.drawImage(meteorImage, meteor.xpos, meteor.ypos, meteor.width, meteor.height, null);
         g.drawImage(BallImage, Ball.xpos, Ball.ypos, Ball.width, Ball.height, null);
         g.drawImage(borderImage, border.xpos, border.ypos, border.width, border.height, null);
@@ -214,17 +214,17 @@ public class BasicGameApp implements Runnable, KeyListener {
     @Override
     public void keyTyped(KeyEvent e) {
         if (e.getKeyCode()==81) {
-            if(astro.stamina>0) {
-                astro.dy = 0;
-                astro.dx = -50;
-                astro.stamina = astro.stamina -5;
+            if(paddle.stamina>0) {
+                paddle.dy = 0;
+                paddle.dx = -50;
+                paddle.stamina = paddle.stamina -5;
             }
         }
         if (e.getKeyCode()==69) {
-            if(astro.stamina>0) {
-                astro.dy = 0;
-                astro.dx = 50;
-                astro.stamina = astro.stamina -5;
+            if(paddle.stamina>0) {
+                paddle.dy = 0;
+                paddle.dx = 50;
+                paddle.stamina = paddle.stamina -5;
             }
         }
     }
@@ -232,33 +232,33 @@ public class BasicGameApp implements Runnable, KeyListener {
     public void keyPressed(KeyEvent e) {
         System.out.println(e.getKeyCode());
         if (e.getKeyCode()==87){
-            astro.dy = 0;
-            astro.dx = 0;
+            paddle.dy = 0;
+            paddle.dx = 0;
         }
         if (e.getKeyCode()==83) {
-            astro.dy = 0;
-            astro.dx = 0;
+            paddle.dy = 0;
+            paddle.dx = 0;
         }
         if (e.getKeyCode()==65) {
-            astro.dy = 0;
-            astro.dx = -10;
+            paddle.dy = 0;
+            paddle.dx = -10;
         }
         if (e.getKeyCode()==68) {
-            astro.dy = 0;
-            astro.dx = 10;
+            paddle.dy = 0;
+            paddle.dx = 10;
         }
         if (e.getKeyCode()==69) {
-            if(astro.stamina>0) {
-                astro.dy = 0;
-                astro.dx = 50;
-                astro.stamina = astro.stamina -2;
+            if(paddle.stamina>0) {
+                paddle.dy = 0;
+                paddle.dx = 50;
+                paddle.stamina = paddle.stamina -2;
             }
         }
         if (e.getKeyCode()==81) {
-            if(astro.stamina>0) {
-                astro.dy = 0;
-                astro.dx = -50;
-                astro.stamina = astro.stamina -2;
+            if(paddle.stamina>0) {
+                paddle.dy = 0;
+                paddle.dx = -50;
+                paddle.stamina = paddle.stamina -2;
             }
         }
        // if (e.getKeyCode()==38) {
@@ -281,41 +281,41 @@ public class BasicGameApp implements Runnable, KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         if (e.getKeyCode()==87){
-            astro.dy = 0;
-            astro.dx = 0;
+            paddle.dy = 0;
+            paddle.dx = 0;
         }
         if (e.getKeyCode()==83) {
-            astro.dy = 0;
-            astro.dx = 0;
+            paddle.dy = 0;
+            paddle.dx = 0;
         }
         if (e.getKeyCode()==65) {
-            astro.dy = 0;
-            astro.dx = 0;
+            paddle.dy = 0;
+            paddle.dx = 0;
         }
         if (e.getKeyCode()==68) {
-            astro.dy = 0;
-            astro.dx = 0;
+            paddle.dy = 0;
+            paddle.dx = 0;
         }
         if (e.getKeyCode()==69) {
-            astro.dy = 0;
-            astro.dx = 0;
+            paddle.dy = 0;
+            paddle.dx = 0;
         }
         if (e.getKeyCode()==81) {
-            astro.dy = 0;
-            astro.dx = 0;
+            paddle.dy = 0;
+            paddle.dx = 0;
         }
         if (e.getKeyCode()==82) {
-            if(astro.health<1){
-                astro.dx -=1000;
+            if(paddle.health<1){
+                paddle.dx -=1000;
                 Ball.dx -=1000;
                 border.height = 10;
                 border.ypos = 690;
                 border.xpos = 0;
-                astro.health=100;
-                astro.dx = 5;
-                astro.dy = 20;
+                paddle.health=100;
+                paddle.dx = 5;
+                paddle.dy = 20;
                 background = Toolkit.getDefaultToolkit().getImage("smth.png");
-                astro.stamina = 100;
+                paddle.stamina = 100;
             }
         }
       //  if (e.getKeyCode()==38) {
