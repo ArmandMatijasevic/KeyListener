@@ -66,8 +66,8 @@ public class BasicGameApp implements Runnable, KeyListener {
         meteor = new Meteor("meteor", 500, 300, 0);
         meteorImage = Toolkit.getDefaultToolkit().getImage("smth.jpg");
         border = new Death("border of doom",0,690,1.00);
-        borderImage = Toolkit.getDefaultToolkit().getImage("this.jpg");
-        background = Toolkit.getDefaultToolkit().getImage("smth.png");
+        borderImage = Toolkit.getDefaultToolkit().getImage("death.jpg");
+        background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
         run();
     } // end BasicGameApp constructor
 //*******************************************************************************
@@ -98,7 +98,7 @@ public class BasicGameApp implements Runnable, KeyListener {
         border.move();
         if(paddle.rect.intersects(Ball.rect)){
             Ball.dy = -Ball.dy;
-            background = Toolkit.getDefaultToolkit().getImage("smth.png");
+            background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
             double rand1 = Math.random();
             double rand2 = Math.random();
             if (rand1 + Ball.successRate > rand2 + paddle.successRate) {
@@ -119,7 +119,7 @@ public class BasicGameApp implements Runnable, KeyListener {
 
         if(Ball.rect.intersects(border.rect)){
             paddle.health = paddle.health - 34;
-            background = Toolkit.getDefaultToolkit().getImage("img.png");
+
 
         }
         if(paddle.health < 0 ){
@@ -314,7 +314,7 @@ public class BasicGameApp implements Runnable, KeyListener {
                 paddle.health=100;
                 paddle.dx = 5;
                 paddle.dy = 20;
-                background = Toolkit.getDefaultToolkit().getImage("smth.png");
+                background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
                 paddle.stamina = 100;
             }
         }
