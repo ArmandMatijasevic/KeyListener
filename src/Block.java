@@ -41,33 +41,6 @@ public class Block {
         rect=new Rectangle(xpos+width/2, ypos + height/2, width,height);
     }
 
-    public void moove() { // move
-        xpos = xpos + dx/2;
-        ypos = ypos + dy*2;
-        rect=new Rectangle(xpos+width/2, ypos + height/2, width,height);
-    }
-
-    public void bounce() {
-        if(xpos>=1000-width) {
-            dx=-dx;}
-        if(xpos<=0) {
-            dx=-dx;}
-        if(ypos>=700-height) {
-            dy=-dy;}
-        if(ypos<=0) {
-            dy=-dy;}
-    }
-    public void wrap() {
-        if(xpos>1000-width) {
-            xpos=xpos-1000;}
-        if(xpos<0) {
-            xpos=xpos+1000;}
-        if(ypos>700-height) {
-            ypos=ypos-700;}
-        if(ypos<0) {
-            ypos=ypos+700;}
-
-    }
 }
 
 

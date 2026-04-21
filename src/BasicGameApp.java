@@ -11,6 +11,8 @@
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
@@ -18,7 +20,7 @@ import javax.swing.JPanel;
 
 //*******************************************************************************
 
-public class BasicGameApp implements Runnable, KeyListener {
+public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
     //Variable Definition Section
     //Declare the variables used in the program
@@ -41,12 +43,12 @@ public class BasicGameApp implements Runnable, KeyListener {
     Meteor meteor;
     Image meteorImage;
     Image background;
-    Astronaut alien;
-    Image alienImage;
     Death border;
     Image borderImage;
     int size = 10;
     Block [] blocky;
+    Image blockImage;
+    Block block;
 
     // Main method definition
     // This is the code that runs first and automatically
@@ -68,6 +70,11 @@ public class BasicGameApp implements Runnable, KeyListener {
         border = new Death("border of doom",0,690,1.00);
         borderImage = Toolkit.getDefaultToolkit().getImage("death.jpg");
         background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
+        blockImage = Toolkit.getDefaultToolkit().getImage("Normal Block.png");
+        blocky = new Block [10];
+        for (int x=0; x<size; x=x+1) {
+            blocky[x] = new Block("block" + x, 30 + (x * 10), 400);
+        }
         run();
     } // end BasicGameApp constructor
 //*******************************************************************************
@@ -170,12 +177,13 @@ public class BasicGameApp implements Runnable, KeyListener {
         g.drawImage(meteorImage, meteor.xpos, meteor.ypos, meteor.width, meteor.height, null);
         g.drawImage(BallImage, Ball.xpos, Ball.ypos, Ball.width, Ball.height, null);
         g.drawImage(borderImage, border.xpos, border.ypos, border.width, border.height, null);
+        g.drawImage(blockImage, block.xpos, block.ypos, block.width, block.height,null);
         g.dispose();
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
         bufferStrategy.show();
         blocky = new Block[size];
         for (int x=0; x<size; x=x+1){
-            blocky[x] = new Block("meteor"+x,30+(x*10),400);
+            blocky[x] = new Block("block"+x,30+(x*10),400);
         }
     }
 
@@ -334,5 +342,30 @@ public class BasicGameApp implements Runnable, KeyListener {
       //      Ball.dx = 0;
        //     Ball.dy = 0;
        // }
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        System.out.println(e);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println(e);
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        System.out.println(e);
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        System.out.println(e);
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        System.out.println(e);
     }
 }
