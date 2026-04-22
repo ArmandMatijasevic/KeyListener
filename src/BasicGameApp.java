@@ -47,8 +47,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     Image borderImage;
     int size = 10;
     Block [] blocky;
-    Image blockImage;
-    Block block;
+    Image blockyImage;
 
     // Main method definition
     // This is the code that runs first and automatically
@@ -63,14 +62,14 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         setUpGraphics();
         Ball = new Astronaut("White Ball.png", 0, 0, 0.75);
         BallImage = Toolkit.getDefaultToolkit().getImage("White Ball.png");
-        paddle = new Astronaut("Paddle.png", 300, 300, 0.25);
+        paddle = new Astronaut("Paddle.png", 0, 100, 0.25);
         paddleImage = Toolkit.getDefaultToolkit().getImage("Paddle.png");
         meteor = new Meteor("meteor", 500, 300, 0);
         meteorImage = Toolkit.getDefaultToolkit().getImage("smth.jpg");
         border = new Death("border of doom",0,690,1.00);
         borderImage = Toolkit.getDefaultToolkit().getImage("death.jpg");
         background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
-        blockImage = Toolkit.getDefaultToolkit().getImage("Normal Block.png");
+        blockyImage = Toolkit.getDefaultToolkit().getImage("Normal Block.png");
         blocky = new Block [10];
         for (int x=0; x<size; x=x+1) {
             blocky[x] = new Block("block" + x, 30 + (x * 10), 400);
@@ -95,6 +94,9 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
         }
     }
+    public void firstCrash(){
+
+    }
     public void moveThings() {
         paddle.move();
         paddle.wrap();
@@ -104,21 +106,26 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         meteor.bounce();
         border.move();
         if(paddle.rect.intersects(Ball.rect)){
-            Ball.dy = -Ball.dy;
-            background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
-            double rand1 = Math.random();
-            double rand2 = Math.random();
-            if (rand1 + Ball.successRate > rand2 + paddle.successRate) {
-                Ball.dy -= 4;
-            } else {
-                Ball.dy += 10;
-            }
-            if (rand1 + Ball.successRate > rand2 + paddle.successRate) {
-                Ball.dx += 2;
-            } else {
-                Ball.dx -= 5;
-            }
-            paddle.isAlive = false;
+         //   if (firstCrash()=true) {
+                Ball.dy = -Ball.dy;
+                background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
+                double rand1 = Math.random();
+                double rand2 = Math.random();
+                if (rand1 + Ball.successRate > rand2 + paddle.successRate) {
+                    Ball.dy -= 4;
+                } else {
+                    Ball.dy += 10;
+                }
+                if (rand1 + Ball.successRate > rand2 + paddle.successRate) {
+                    Ball.dx += 2;
+                } else {
+                    Ball.dx -= 5;
+                }
+                paddle.isAlive = false;
+      //      }
+          //  else{
+
+          //  }
         }
         if(Ball.dy>50){
             Ball.dy=50;
@@ -177,13 +184,11 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         g.drawImage(meteorImage, meteor.xpos, meteor.ypos, meteor.width, meteor.height, null);
         g.drawImage(BallImage, Ball.xpos, Ball.ypos, Ball.width, Ball.height, null);
         g.drawImage(borderImage, border.xpos, border.ypos, border.width, border.height, null);
-        g.drawImage(blockImage, block.xpos, block.ypos, block.width, block.height,null);
         g.dispose();
         g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
         bufferStrategy.show();
-        blocky = new Block[size];
-        for (int x=0; x<size; x=x+1){
-            blocky[x] = new Block("block"+x,30+(x*10),400);
+        for (int x=0; x<size; x=x+1) {
+            g.drawImage(blockyImage, blocky[x].xpos, blocky[x].ypos, blocky[x].width, blocky[x].height,null);
         }
     }
 
