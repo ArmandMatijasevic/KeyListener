@@ -48,6 +48,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     int size = 10;
     Block [] blocky;
     Image blockyImage;
+    public boolean firstCrash;
 
     // Main method definition
     // This is the code that runs first and automatically
@@ -72,7 +73,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         blockyImage = Toolkit.getDefaultToolkit().getImage("Normal Block.png");
         blocky = new Block [10];
         for (int x=0; x<size; x=x+1) {
-            blocky[x] = new Block("block" + x, 30 + (x * 10), 400);
+            blocky[x] = new Block("block" + x, 30 + (x * (183/2)), 400);
         }
         run();
     } // end BasicGameApp constructor
@@ -94,9 +95,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
         }
     }
-    public void firstCrash(){
 
-    }
     public void moveThings() {
         paddle.move();
         paddle.wrap();
@@ -105,12 +104,16 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         meteor.move();
         meteor.bounce();
         border.move();
+        for (int x=0; x<size; x=x+1) {
+            blocky[x].move();
+        }
         if(paddle.rect.intersects(Ball.rect)){
-         //   if (firstCrash()=true) {
+            if (firstCrash==true) {
                 Ball.dy = -Ball.dy;
                 background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
                 double rand1 = Math.random();
                 double rand2 = Math.random();
+                firstCrash=false;
                 if (rand1 + Ball.successRate > rand2 + paddle.successRate) {
                     Ball.dy -= 4;
                 } else {
@@ -122,14 +125,35 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
                     Ball.dx -= 5;
                 }
                 paddle.isAlive = false;
-      //      }
-          //  else{
+            }
 
-          //  }
+        }
+        else{
+            firstCrash=true;
         }
         if(Ball.dy>50){
             Ball.dy=50;
         }
+        if(Ball.ypos<5){
+            Ball.ypos=15;
+            Ball.dy=Math.abs(Ball.dy);
+        }
+        for (int x=0; x<size; x=x+1) {
+
+        if(Ball.rect.intersects(blocky[x].rect)){
+            if (firstCrash==true) {
+                Ball.dy = -Ball.dy;
+                firstCrash=false;
+                blocky[x].xpos=-100;
+
+            }
+
+        }
+        else{
+            firstCrash=true;
+        }
+        }
+
 
         if(Ball.rect.intersects(border.rect)){
             paddle.health = paddle.health - 34;
@@ -142,6 +166,10 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
             border.height = 700;
             border.ypos = 0;
             border.xpos = 0;
+            for (int x=0; x<size; x=x+1) {
+                blocky[x].xpos = -100;
+            }
+
         }
         if(Ball.ypos > 600){
             Ball.ypos = 300;
@@ -184,12 +212,13 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         g.drawImage(meteorImage, meteor.xpos, meteor.ypos, meteor.width, meteor.height, null);
         g.drawImage(BallImage, Ball.xpos, Ball.ypos, Ball.width, Ball.height, null);
         g.drawImage(borderImage, border.xpos, border.ypos, border.width, border.height, null);
-        g.dispose();
-        g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
-        bufferStrategy.show();
         for (int x=0; x<size; x=x+1) {
             g.drawImage(blockyImage, blocky[x].xpos, blocky[x].ypos, blocky[x].width, blocky[x].height,null);
         }
+        g.dispose();
+        g.drawImage(background, 0, 0, WIDTH, HEIGHT, null);
+        bufferStrategy.show();
+
     }
 
     //Pauses or sleeps the computer for the amount specified in milliseconds
@@ -329,6 +358,9 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
                 paddle.dy = 20;
                 background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
                 paddle.stamina = 100;
+                for (int x=0; x<size; x=x+1) {
+                    blocky[x] = new Block("block" + x, 30 + (x * (183/2)), 400);
+                }
             }
         }
       //  if (e.getKeyCode()==38) {

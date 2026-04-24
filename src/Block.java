@@ -32,7 +32,7 @@ public class Block {
         height = 30;
         isAlive = true;
         health = 1;
- 
+        rect=new Rectangle(xpos+width/2, ypos + height/2, width,height);
     }
 
     public void move() { // move
