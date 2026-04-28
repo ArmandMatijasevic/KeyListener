@@ -45,9 +45,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     Image background;
     Death border;
     Image borderImage;
+    Death winner;
+    Image winnerImage;
     int size = 10;
     Block [] blocky;
     Image blockyImage;
+    int blocksnumber=10;
     public boolean firstCrash;
 
     // Main method definition
@@ -71,9 +74,11 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         borderImage = Toolkit.getDefaultToolkit().getImage("death.jpg");
         background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
         blockyImage = Toolkit.getDefaultToolkit().getImage("Normal Block.png");
+        winnerImage = Toolkit.getDefaultToolkit().getImage("You Win.jpg");
+        winner = new Death("winner",0,700,1.00);
         blocky = new Block [10];
         for (int x=0; x<size; x=x+1) {
-            blocky[x] = new Block("block" + x, 30 + (x * (183/2)), 400);
+            blocky[x] = new Block("block" + x, 30 + (x * (183/2)), 100);
         }
         run();
     } // end BasicGameApp constructor
@@ -104,6 +109,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         meteor.move();
         meteor.bounce();
         border.move();
+        winner.move();
         for (int x=0; x<size; x=x+1) {
             blocky[x].move();
         }
@@ -145,11 +151,12 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
                 Ball.dy = -Ball.dy;
                 firstCrash=false;
                 blocky[x].xpos=-100;
+                blocksnumber = blocksnumber-1;
 
             }
 
         }
-        else{
+        if(!Ball.rect.intersects(paddle.rect)){
             firstCrash=true;
         }
         }
@@ -169,7 +176,14 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
             for (int x=0; x<size; x=x+1) {
                 blocky[x].xpos = -100;
             }
+        }
 
+        if (blocksnumber<1){
+            paddle.dx +=1000;
+            Ball.dx +=1000;
+            winner.height = 700;
+            winner.ypos = 0;
+            winner.xpos = 0;
         }
         if(Ball.ypos > 600){
             Ball.ypos = 300;
@@ -212,6 +226,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         g.drawImage(meteorImage, meteor.xpos, meteor.ypos, meteor.width, meteor.height, null);
         g.drawImage(BallImage, Ball.xpos, Ball.ypos, Ball.width, Ball.height, null);
         g.drawImage(borderImage, border.xpos, border.ypos, border.width, border.height, null);
+        g.drawImage(winnerImage, winner.xpos, winner.ypos, winner.width, winner.height, null);
         for (int x=0; x<size; x=x+1) {
             g.drawImage(blockyImage, blocky[x].xpos, blocky[x].ypos, blocky[x].width, blocky[x].height,null);
         }
@@ -353,13 +368,36 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
                 border.height = 10;
                 border.ypos = 690;
                 border.xpos = 0;
+                winner.height = 0;
+                winner.ypos = 700;
+                winner.xpos = 0;
                 paddle.health=100;
                 paddle.dx = 5;
                 paddle.dy = 20;
+                blocksnumber = 10;
                 background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
                 paddle.stamina = 100;
                 for (int x=0; x<size; x=x+1) {
-                    blocky[x] = new Block("block" + x, 30 + (x * (183/2)), 400);
+                    blocky[x] = new Block("block" + x, 30 + (x * (183/2)), 100);
+                }
+            }
+            if(blocksnumber<1){
+                paddle.dx -=1000;
+                Ball.dx -=1000;
+                border.height = 10;
+                border.ypos = 690;
+                border.xpos = 0;
+                winner.height = 0;
+                winner.ypos = 700;
+                winner.xpos = 0;
+                paddle.health=100;
+                paddle.dx = 5;
+                paddle.dy = 20;
+                blocksnumber = 10;
+                background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
+                paddle.stamina = 100;
+                for (int x=0; x<size; x=x+1) {
+                    blocky[x] = new Block("block" + x, 30 + (x * (183/2)), 100);
                 }
             }
         }

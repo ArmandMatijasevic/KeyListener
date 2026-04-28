@@ -32,13 +32,13 @@ public class Block {
         height = 30;
         isAlive = true;
         health = 1;
-        rect=new Rectangle(xpos+width/2, ypos + height/2, width,height);
+        rect=new Rectangle(xpos+width/2, ypos + height/2, width-15,height+0);
     }
 
     public void move() { // move
         xpos = xpos + dx;
         ypos = ypos + dy;
-        rect=new Rectangle(xpos+width/2, ypos + height/2, width,height);
+        rect=new Rectangle(xpos+width/2, ypos + height/2, width-15,height+0);
     }
 
 }
