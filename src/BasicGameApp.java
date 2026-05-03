@@ -11,12 +11,14 @@
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferStrategy;
 import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.event.MouseInputListener;
 
 //*******************************************************************************
 
@@ -52,6 +54,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     Image blockyImage;
     int blocksnumber=10;
     public boolean firstCrash;
+    Rectangle button = new Rectangle(100,70,100,70);
 
     // Main method definition
     // This is the code that runs first and automatically
@@ -421,26 +424,29 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        System.out.println(e);
+        if (button.contains(e.getPoint())){
+            System.out.println("hi");
+        }
+        System.out.println("Mouse clicked at: " + e.getX() + ", " + e.getY());
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        System.out.println(e);
+
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        System.out.println(e);
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        System.out.println(e);
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        System.out.println(e);
+
     }
 }
