@@ -54,7 +54,6 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
     Image blockyImage;
     int blocksnumber=10;
     public boolean firstCrash;
-    Rectangle button = new Rectangle(100,70,100,70);
 
     // Main method definition
     // This is the code that runs first and automatically
@@ -269,6 +268,7 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
         bufferStrategy = canvas.getBufferStrategy();
         canvas.requestFocus();
         canvas.addKeyListener(this);
+        canvas.addMouseListener(this);
         System.out.println("DONE graphic setup");
     }
     @Override
@@ -424,29 +424,71 @@ public class BasicGameApp implements Runnable, KeyListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (button.contains(e.getPoint())){
-            System.out.println("hi");
+
+        if (e.getX()>0 & e.getY()<700){
+            if(paddle.health<1) {
+                paddle.dx -= 1000;
+                Ball.dx -= 1000;
+                border.height = 10;
+                border.ypos = 690;
+                border.xpos = 0;
+                winner.height = 0;
+                winner.ypos = 700;
+                winner.xpos = 0;
+                paddle.health = 100;
+                paddle.dx = 5;
+                paddle.dy = 20;
+                blocksnumber = 10;
+                background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
+                paddle.stamina = 100;
+                for (int x = 0; x < size; x = x + 1) {
+                    blocky[x] = new Block("block" + x, 30 + (x * (183 / 2)), 100);
+                }
+            }
+            if(blocksnumber<1){
+                paddle.dx -=1000;
+                Ball.dx -=1000;
+                border.height = 10;
+                border.ypos = 690;
+                border.xpos = 0;
+                winner.height = 0;
+                winner.ypos = 700;
+                winner.xpos = 0;
+                paddle.health=100;
+                paddle.dx = 5;
+                paddle.dy = 20;
+                blocksnumber = 10;
+                background = Toolkit.getDefaultToolkit().getImage("Space.jpg");
+                paddle.stamina = 100;
+                for (int x=0; x<size; x=x+1) {
+                    blocky[x] = new Block("block" + x, 30 + (x * (183/2)), 100);
+                }
+            }
         }
-        System.out.println("Mouse clicked at: " + e.getX() + ", " + e.getY());
+
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
+
 
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
 
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
 
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
+
 
     }
 }
